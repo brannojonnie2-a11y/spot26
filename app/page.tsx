@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import ClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Spotify",
+  title: "Renew",
 }
 
 export default function Page() {
