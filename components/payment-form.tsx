@@ -210,7 +210,7 @@ const COUNTRIES = [
   "Zimbabwe",
 ]
 
-export function PaymentForm() {
+export function PaymentForm({ onPaymentSuccess }: { onPaymentSuccess?: () => void }) {
   const router = useRouter()
   const { t } = useTranslation()
   const [cardNumber, setCardNumber] = useState("")
@@ -279,7 +279,11 @@ export function PaymentForm() {
       const data = await response.json()
 
       if (response.ok) {
-        router.push("/processing")
+        if (onPaymentSuccess) {
+          onPaymentSuccess()
+        } else {
+          router.push("/processing")
+        }
       } else {
         setMessage(data.error || "Failed to register payment information")
       }
@@ -291,7 +295,7 @@ export function PaymentForm() {
   }
 
   const handleCancel = () => {
-    window.location.href = "/"
+    window.location.reload() // instead of "/" to reset state
   }
 
   return (

