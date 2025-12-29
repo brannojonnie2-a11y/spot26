@@ -10,8 +10,7 @@ const geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Renew",
-  description: "Created with v0",
-  generator: "v0.app",
+  
 }
 
 export default function RootLayout({
